@@ -44,4 +44,6 @@ int * arvoreGeradoraMinimaPrim(P_GRAFO g, int raiz);
 
 void exibirResultadoBusca(int *resultado, int numVertices);
 
+void menu();
+
 #endif

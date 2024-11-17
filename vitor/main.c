@@ -2,15 +2,6 @@
 #include <stdlib.h>
 #include "grafo.h"
 
-void menu() {
-    printf("\n--- MENU ---\n");
-    printf("1. Busca em Largura\n");
-    printf("2. Busca em Profundidade\n");
-    printf("3. Árvore Geradora Mínima (Prim)\n");
-    printf("0. Sair\n");
-    printf("Escolha: ");
-}
-
 int main() {
     int opcao, numVertices, origem, destino, peso, inicio;
     P_GRAFO grafo;
@@ -35,7 +26,8 @@ int main() {
         scanf("%d", &opcao);
 
         switch (opcao) {
-            case 1: { // Busca em Largura
+            case 1: {
+                // Busca em Largura
                 printf("Vértice inicial: ");
                 scanf("%d", &inicio);
                 int *resultado = buscaEmLargura(grafo, inicio);
@@ -43,7 +35,8 @@ int main() {
                 free(resultado);
                 break;
             }
-            case 2: { // Busca em Profundidade
+            case 2: {
+                // Busca em Profundidade
                 printf("Vértice inicial: ");
                 scanf("%d", &inicio);
                 int *resultado = buscaEmProfundidade(grafo, inicio);
@@ -51,7 +44,8 @@ int main() {
                 free(resultado);
                 break;
             }
-            case 3: { // Árvore Geradora Mínima (Prim)
+            case 3: {
+                // Árvore Geradora Mínima (Prim)
                 printf("Vértice raiz: ");
                 scanf("%d", &inicio);
                 int *resultado = arvoreGeradoraMinimaPrim(grafo, inicio);
@@ -59,6 +53,9 @@ int main() {
                 free(resultado);
                 break;
             }
+            case 4:
+                // Dijkstra
+                break;
             case 0:
                 printf("Saindo...\n");
                 break;

@@ -194,3 +194,13 @@ void exibirResultadoBusca(int *resultado, int numVertices) {
         printf("Vértice %d: Pai = %d\n", i, resultado[i]);
     }
 }
+
+void menu() {
+    printf("\n--------- MENU ---------\n");
+    printf("1. Busca em Largura\n");
+    printf("2. Busca em Profundidade\n");
+    printf("3. Árvore Geradora Mínima (Prim)\n");
+    printf("4. Dijkstra\n");
+    printf("0. Sair\n");
+    printf("Escolha: ");
+}
