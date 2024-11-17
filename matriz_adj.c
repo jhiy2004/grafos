@@ -30,6 +30,11 @@ void inserirAresta(Grafo* g, int u, int v){
 	g->adj[v][u] = 1;
 }
 
+void inserirArestaPeso(Grafo* g, int u, int v, int peso){
+	g->adj[u][v] = peso;
+	g->adj[v][u] = peso;
+}
+
 void removerAresta(Grafo* g, int u, int v){
 	g->adj[u][v] = 0;
 	g->adj[v][u] = 0;
@@ -95,3 +100,30 @@ int* buscaLargura(Grafo *g, int s){
 	free(visitado);
 	return pai;
 }
+
+int* dijkstra(Grafo* g, int s) {
+	int v, *pai = malloc(g->n * sizeof(int));
+	int t;
+	FP* h = criarFprio(g->n);
+	for (v = 0; v < g->n; v++) {
+		pai[v] = -1;
+		insereFP(h, v, INT_MAX);
+	}
+	pai[s] = s;
+	diminuiprioridade(h, s, 0);
+
+	while (!vaziaFP(h)) {
+		v = extraiMinimoFP(h);
+		if (prioridadeFP(h, v) != INT_MAX)
+			for (int i = 0; i < g->n; i++){
+				if (g->adj[v][i] != 0){
+					if (prioridadeFP(h, v)+g->adj[v][i] < prioridadeFP(h, i)) {
+						diminuiprioridade(h, i, prioridadeFP(h,v)+g->adj[v][i]);
+						pai[i] = v;
+					}
+				}
+			}
+	}
+	return pai;
+}
+

@@ -1,87 +1,57 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "matriz_adj.h"
 
 int main(){
-	Grafo* g = criarGrafo(16);
+	Grafo* g = criarGrafo(9);
 
-	inserirAresta(g, 0, 1);
-	inserirAresta(g, 1, 0);
+	inserirArestaPeso(g, 0, 1, 4);  // Aresta de 0 a 1 com peso 4
+	inserirArestaPeso(g, 0, 7, 8);  // Aresta de 0 a 7 com peso 8
 
-	inserirAresta(g, 0, 4);
-	inserirAresta(g, 4, 0);
+	inserirArestaPeso(g, 1, 0, 4);  // Aresta de 1 a 0 com peso 4
+	inserirArestaPeso(g, 1, 2, 8);  // Aresta de 1 a 2 com peso 8
+	inserirArestaPeso(g, 1, 7, 11); // Aresta de 1 a 7 com peso 11
 
-	inserirAresta(g, 1, 4);
-	inserirAresta(g, 4, 1);
+	inserirArestaPeso(g, 2, 1, 8);  // Aresta de 2 a 1 com peso 8
+	inserirArestaPeso(g, 2, 3, 7);  // Aresta de 2 a 3 com peso 7
+	inserirArestaPeso(g, 2, 5, 4);  // Aresta de 2 a 5 com peso 4
+	inserirArestaPeso(g, 2, 8, 2);  // Aresta de 2 a 8 com peso 2
 
-	inserirAresta(g, 1, 2);
-	inserirAresta(g, 2, 1);
+	inserirArestaPeso(g, 3, 2, 7);  // Aresta de 3 a 2 com peso 7
+	inserirArestaPeso(g, 3, 4, 9);  // Aresta de 3 a 4 com peso 9
+	inserirArestaPeso(g, 3, 5, 14); // Aresta de 3 a 5 com peso 14
 
-	inserirAresta(g, 2, 3);
-	inserirAresta(g, 3, 2);
+	inserirArestaPeso(g, 4, 3, 9);  // Aresta de 4 a 3 com peso 9
+	inserirArestaPeso(g, 4, 5, 10); // Aresta de 4 a 5 com peso 10
 
-	inserirAresta(g, 2, 6);
-	inserirAresta(g, 6, 2);
+	inserirArestaPeso(g, 5, 2, 4);  // Aresta de 5 a 2 com peso 4
+	inserirArestaPeso(g, 5, 3, 14); // Aresta de 5 a 3 com peso 14
+	inserirArestaPeso(g, 5, 4, 10); // Aresta de 5 a 4 com peso 10
+	inserirArestaPeso(g, 5, 6, 2);  // Aresta de 5 a 6 com peso 2
 
-	inserirAresta(g, 3, 7);
-	inserirAresta(g, 7, 3);
+	inserirArestaPeso(g, 6, 5, 2);  // Aresta de 6 a 5 com peso 2
+	inserirArestaPeso(g, 6, 7, 1);  // Aresta de 6 a 7 com peso 1
+	inserirArestaPeso(g, 6, 8, 6);  // Aresta de 6 a 8 com peso 6
 
-	inserirAresta(g, 7, 6);
-	inserirAresta(g, 6, 7);
+	inserirArestaPeso(g, 7, 0, 8);  // Aresta de 7 a 0 com peso 8
+	inserirArestaPeso(g, 7, 1, 11); // Aresta de 7 a 1 com peso 11
+	inserirArestaPeso(g, 7, 6, 1);  // Aresta de 7 a 6 com peso 1
+	inserirArestaPeso(g, 7, 8, 7);  // Aresta de 7 a 8 com peso 7
 
-	inserirAresta(g, 6, 11);
-	inserirAresta(g, 11, 6);
-
-	inserirAresta(g, 7, 11);
-	inserirAresta(g, 11, 7);
-
-	inserirAresta(g, 4, 8);
-	inserirAresta(g, 8, 4);
-
-	inserirAresta(g, 8, 9);
-	inserirAresta(g, 9, 8);
-
-	inserirAresta(g, 8, 12);
-	inserirAresta(g, 12, 8);
-
-	inserirAresta(g, 8, 13);
-	inserirAresta(g, 13, 8);
-
-	inserirAresta(g, 9, 5);
-	inserirAresta(g, 5, 9);
-
-	inserirAresta(g, 9, 10);
-	inserirAresta(g, 10, 9);
-
-	inserirAresta(g, 9, 12);
-	inserirAresta(g, 12, 9);
-
-	inserirAresta(g, 5, 10);
-	inserirAresta(g, 10, 5);
-
-	inserirAresta(g, 10, 13);
-	inserirAresta(g, 13, 10);
-
-	inserirAresta(g, 10, 14);
-	inserirAresta(g, 14, 10);
-
-	inserirAresta(g, 13, 12);
-	inserirAresta(g, 12, 13);
-	
-	inserirAresta(g, 13, 14);
-	inserirAresta(g, 14, 13);
-
-	inserirAresta(g, 14, 15);
-	inserirAresta(g, 15, 14);
+	inserirArestaPeso(g, 8, 2, 2);  // Aresta de 8 a 2 com peso 2
+	inserirArestaPeso(g, 8, 6, 6);  // Aresta de 8 a 6 com peso 6
+	inserirArestaPeso(g, 8, 7, 7);  // Aresta de 8 a 7 com peso 7
 
 	imprimirArestas(g);
 
-	int* pai = buscaLargura(g, 0);
+	int* pai = dijkstra(g, 0);
 
 	printf("[");
 	for(int i = 0; i < g->n; i++){
 		printf("%d, ", pai[i]);
 	}
 	printf("]\n");
+
 	return 0;
 }

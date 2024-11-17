@@ -1,0 +1,4 @@
+Para gerar o grafo do arquivo 'grafo.dot', basta digitar:
+
+dot -Tpng grafo.dot -o grafo.png
+
