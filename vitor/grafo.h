@@ -3,6 +3,7 @@
 
 typedef struct NO {
     int v;
+    int peso;
     struct NO *prox;
 } NO;
 
@@ -27,8 +28,8 @@ void removerAresta(P_GRAFO g, int u, int v);
 P_NO removerDaLista(P_NO lista, int v);
 
 // Funções de inserir aresta
-void inserirAresta(P_GRAFO g, int u, int v);
-P_NO inserirNaLista(P_NO lista, int v);
+void inserirAresta(P_GRAFO g, int u, int v, int peso);
+P_NO inserirNaLista(P_NO lista, int v, int peso);
 
 // Busca em Largura
 int * buscaEmLargura(P_GRAFO g, int s);
@@ -38,6 +39,9 @@ int * buscaEmProfundidade(P_GRAFO g, int s);
 
 // Dijkstra
 
-// Árvore Geradora Mínima (Algoritmo de Prim)
+// Árvore Geradora Mínima
+int * arvoreGeradoraMinimaPrim(P_GRAFO g, int raiz);
+
+void exibirResultadoBusca(int *resultado, int numVertices);
 
 #endif

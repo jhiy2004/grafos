@@ -1,68 +1,69 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "grafo.h"
 
 void menu() {
     printf("\n--- MENU ---\n");
     printf("1. Busca em Largura\n");
     printf("2. Busca em Profundidade\n");
-    printf("3. Dijkstra\n");
-    printf("4. Árvore Geradora Mínima\n");
+    printf("3. Árvore Geradora Mínima (Prim)\n");
     printf("0. Sair\n");
     printf("Escolha: ");
 }
 
 int main() {
     int opcao, numVertices, origem, destino, peso, inicio;
-    Grafo *grafo;
+    P_GRAFO grafo;
 
+    // Criar o grafo
     printf("Número de vértices: ");
     scanf("%d", &numVertices);
-    grafo = criarGrafo(numVertices, false);
+    grafo = criarGrafo(numVertices);
 
+    // Adicionar arestas
     printf("Adicione as arestas no formato: origem destino peso (digite -1 para encerrar):\n");
     while (1) {
         scanf("%d", &origem);
         if (origem == -1) break;
         scanf("%d %d", &destino, &peso);
-        adicionarAresta(grafo, origem, destino, peso);
+        inserirAresta(grafo, origem, destino, peso);
     }
 
+    // Menu de operações
     do {
         menu();
         scanf("%d", &opcao);
 
         switch (opcao) {
-            case 1:
+            case 1: { // Busca em Largura
                 printf("Vértice inicial: ");
                 scanf("%d", &inicio);
-                printf("Busca em Largura a partir do vértice %d:\n", inicio);
-                buscaEmLargura(grafo, inicio);
+                int *resultado = buscaEmLargura(grafo, inicio);
+                exibirResultadoBusca(resultado, numVertices);
+                free(resultado);
                 break;
-
-            case 2:
+            }
+            case 2: { // Busca em Profundidade
                 printf("Vértice inicial: ");
                 scanf("%d", &inicio);
-                printf("Busca em Profundidade a partir do vértice %d:\n", inicio);
-                buscaEmProfundidade(grafo, inicio);
+                int *resultado = buscaEmProfundidade(grafo, inicio);
+                exibirResultadoBusca(resultado, numVertices);
+                free(resultado);
                 break;
-
-            case 3:
-                printf("Vértice inicial: ");
+            }
+            case 3: { // Árvore Geradora Mínima (Prim)
+                printf("Vértice raiz: ");
                 scanf("%d", &inicio);
-                dijkstra(grafo, inicio);
+                int *resultado = arvoreGeradoraMinimaPrim(grafo, inicio);
+                exibirResultadoBusca(resultado, numVertices);
+                free(resultado);
                 break;
-
-            case 4:
-                arvoreGeradoraMinima(grafo);
-                break;
-
+            }
             case 0:
                 printf("Saindo...\n");
                 break;
-
             default:
                 printf("Opção inválida.\n");
-                break;
         }
     } while (opcao != 0);
 
