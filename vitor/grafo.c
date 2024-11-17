@@ -1,8 +1,7 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include <limits.h>
 #include "grafo.h"
+#include "fila.h"
+#include "pilha.h"
 
 // Criação do grafo
 P_GRAFO criarGrafo(int num){
@@ -70,73 +69,74 @@ P_NO removerDaLista(P_NO lista, int v){
 }
 
 // Implementação da Busca em Profundidade
-int * encontraComponentes(P_GRAFO g){
-    int s, c = 0, *componentes = (int*) malloc(g->num * sizeof(int));
-
-    for(s=0; s < g->num; s++){
-        componentes[s] = -1;
-    }for(s=0; s < g->num; s++){
-        if(componentes[s] == -1){
-            visitaRec(g, componentes, c, s);
-            c++;
-        }
-    }
-
-    return componentes;
-}
-
-void visitaRec(P_GRAFO g, int *componentes, int comp, int v){
+int * buscaEmProfundidade(P_GRAFO g, int s){
+    int v;
     P_NO t;
+    int *pai = (int*) malloc(g->num * sizeof(int));
+    int *visitado = (int*) malloc(g->num * sizeof(int));
 
-    componentes[v] = comp;
-    for(t=g->adjacencia[v]; t != NULL; t = t->prox){
-        if(componentes[t->v] == -1){
-            visitaRec(g, componentes, comp, t->v);
+    P_PILHA p = criarPilha();
+
+    for(v=0; v < g->num; v++){
+        pai[v] = -1;
+        visitado[v] = 0;
+    }
+
+    empilhar(p, s);
+    pai[s] = s;
+
+    while(!pilhaVazia(p)){
+        v = desempilar(p);
+        visitado[v] = 1;
+
+        for(t = g->adjacencia[v]; t != NULL; t = t->prox){
+            if(!visitado[t->v]){
+                pai[t->v] = v;
+                empilhar(p, t->v);
+            }
         }
     }
+
+    destroiPilha(p);
+    free(visitado);
+
+    return pai;
 }
 
 // Implementação da Busca em Largura
-void buscaLargura(P_GRAFO g, int *componentes, int comp, int inicio){
-    int *fila = (int*) malloc(g->num * sizeof(int));
-    int frente = 0, tras = 0;
+int * buscaEmLargura(P_GRAFO g, int s){
+    int v;
+    P_NO t;
+    int *pai = (int*) malloc(g->num * sizeof(int));
+    int *visitado = (int*) malloc(g->num * sizeof(int));
 
-    // Enfileira o vértice inicial
-    fila[tras++] = inicio;
-    componentes[inicio] = comp;
+    P_FILA f = criarFila();
 
-    while (frente < tras) {
-        int v = fila[frente++]; // Desenfileira o próximo vértice
-        P_NO t = g->adjacencia[v];
+    for(v=0; v < g->num; v++){
+        pai[v] = -1;
+        visitado[v] = 0;
+    }
 
-        while (t != NULL) {
-            if (componentes[t->v] == -1) { // Vértice ainda não visitado
-                componentes[t->v] = comp;
-                fila[tras++] = t->v; // Enfileira o vértice
+    enfileira(f, s);
+    pai[s] = s;
+    visitado[s] = 1;
+
+    while(!filaVazia(f)){
+        v = desenfileira(f);
+        
+        for(t = g->adjacencia[v]; t != NULL; t = t->prox){
+            if(!visitado[t->v]){
+                visitado[t->v] = 1;
+                pai[t->v] = v;
+                enfileira(f, t->v);
             }
-            t = t->prox;
         }
     }
 
-    free(fila);
-}
+    destroiFila(f);
+    free(visitado);
 
-int *encontraComponentesBFS(P_GRAFO g) {
-    int s, c = 0;
-    int *componentes = (int *) malloc(g->num * sizeof(int));
-
-    for (s = 0; s < g->num; s++) {
-        componentes[s] = -1; // Inicializa como não visitado
-    }
-
-    for (s = 0; s < g->num; s++) {
-        if (componentes[s] == -1) { // Novo componente encontrado
-            buscaLargura(g, componentes, c, s);
-            c++;
-        }
-    }
-
-    return componentes;
+    return pai;
 }
 
 // Implementação de Dijkstra

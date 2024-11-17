@@ -1,11 +1,6 @@
 #ifndef GRAFO_H
 #define GRAFO_H
 
-#include <stdbool.h>
-
-#define MAX_VERTICES 100
-#define INF 1000000
-
 typedef struct NO {
     int v;
     struct NO *prox;
@@ -20,7 +15,7 @@ typedef struct GRAFO {
 
 typedef GRAFO * P_GRAFO;
 
-// Funçãp de crição do grafo
+// Função de crição do grafo
 P_GRAFO criarGrafo(int num);
 
 // Funções de liberação do grafo
@@ -35,19 +30,14 @@ P_NO removerDaLista(P_NO lista, int v);
 void inserirAresta(P_GRAFO g, int u, int v);
 P_NO inserirNaLista(P_NO lista, int v);
 
-// REFAZER AS FUNÇÕES ABAIXO E ESTUDAR TUDO NO ONIBUS
-
 // Busca em Largura
-void buscaEmLargura(GRAFO *grafo, int inicio);
+int * buscaEmLargura(P_GRAFO g, int s);
 
 // Busca em Profundidade
-int * encontraComponentes(P_GRAFO g);
-void visitaRec(P_GRAFO g, int *componentes, int comp, int v);
+int * buscaEmProfundidade(P_GRAFO g, int s);
 
 // Dijkstra
-void dijkstra(GRAFO *grafo, int inicio);
 
 // Árvore Geradora Mínima (Algoritmo de Prim)
-void arvoreGeradoraMinima(GRAFO *grafo);
 
 #endif
