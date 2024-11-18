@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "fila.h"
+#include "pilha.h"
 #include "matriz_adj.h"
 #include "heap_bin.h"
 
@@ -51,31 +52,53 @@ int possuiArestaMA(Grafo* g, int u, int v){
 	return g->adj[u][v];
 }
 
-void buscaProfundidadeMA(Grafo *g, int *pai, int p, int v){
-	pai[v] = p;
-	for(int i = 0; i < g->n; i++){
-		if(g->adj[v][i] == 1 && pai[i] == -1){
-			buscaProfundidadeMA(g, pai, v, i);
-		}
-	}
-}
+int* buscaEmProfundidadeMA(Grafo *g, int s){
+    int v;
+    P_NO t;
+    BUSCA resultado;
+    resultado.pai = (int *)malloc(g->n * sizeof(int));
+    resultado.custo = (int *)malloc(g->n * sizeof(int));
+    int *visitado = (int*) malloc(g->n * sizeof(int));
 
-int* encontraCaminhosMA(Grafo *g, int s){
-	int i = 0;
-	int *pai = (int*) malloc(g->n * sizeof(int));
-	for(i = 0; i < g->n; i++){
-		pai[i] = -1;
-	}
-	buscaProfundidadeMA(g, pai, s, s);
-	return pai;
+    P_PILHA p = criarPilha();
+
+    for(v=0; v < g->n; v++){
+        resultado.pai[v] = -1;
+        resultado.custo[v] = 0;
+        visitado[v] = 0;
+    }
+
+    empilhar(p, s);
+    resultado.pai[s] = s;
+    resultado.custo[s] = 0;
+
+    while(!pilhaVazia(p)){
+        v = desempilar(p);
+        visitado[v] = 1;
+
+        for(int i=0; i < g->n; i++){
+			if (g->adj[v][i] != 0){
+				if(!visitado[i]){
+					resultado.pai[i] = v;
+					resultado.custo[i] = resultado.custo[v] + g->adj[v][i];
+					empilhar(p, i);
+				}
+			}
+        }
+    }
+
+    destroiPilha(p);
+    free(visitado);
+
+    return resultado;
 }
 
 BUSCA buscaLarguraMA(Grafo *g, int s){
 	int w = 0;
 	int v = 0;
-    BUSCA resultado;
+	BUSCA resultado;
 	resultado.pai = (int*)malloc(g->n * sizeof(int));
-    resultado.custo = (int*)malloc(g->n * sizeof(int));
+	resultado.custo = (int*)malloc(g->n * sizeof(int));
 	int *visitado = (int*)malloc(g->n * sizeof(int));
 
 	P_FILA f = criarFila();
@@ -144,10 +167,7 @@ BUSCA geradoraMinimaMA(Grafo* g, int s) {
 	visitado[0] = 1;
 
 	while (!vaziaFP(h)) {
-		imprimirHeap(h);
-		printf("\n");
 		v = extraiMinimoFP(h);
-		printf("V: %d\n", v);
 
 		visitado[v] = 1;
 

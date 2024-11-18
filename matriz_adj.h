@@ -19,7 +19,6 @@ void removerArestaMA(Grafo *g, int u, int v);
 int possuiArestaMA(Grafo *g, int u, int v);
 
 void buscaProfundidadeMA(Grafo *g, int *pai, int p, int v);
-int* encontraCaminhosMA(Grafo *g, int s);
 
 BUSCA buscaLarguraMA(Grafo *g, int s);
 
