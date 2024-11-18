@@ -45,7 +45,7 @@ int main(){
 
 	imprimirArestas(g);
 
-	int* pai = dijkstra(g, 0);
+	int* pai = geradoraMinima(g, 0);
 
 	printf("[");
 	for(int i = 0; i < g->n; i++){

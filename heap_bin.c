@@ -69,7 +69,7 @@ void diminuiprioridade(FP* fp, int v, int prioridade){
 		if(fp->indice[i] == v)
 			break;
 	}
-	while (i != 0 && elementos[fp->indice[paiFP(i)]].prioridade > elementos[fp->indice[i]].prioridade){
+	while (i != 0 && elementos[fp->indice[paiFP(i)]].prioridade >= elementos[fp->indice[i]].prioridade){
 		int temp = fp->indice[i];
 
 		fp->indice[i] = fp->indice[paiFP(i)];
@@ -121,7 +121,7 @@ int extraiMinimoFP(FP* fp){
 
 void imprimirHeap(FP* fp){
 	printf("HEAP(Vetor) = [");
-	for(int i=0; i < fp->tamanho; i++){
+	for(int i=0; i < fp->n; i++){
 		printf("(%d;%d), ", (fp->v)[i].vertice, (fp->v)[i].prioridade);
 	}
 	printf("]\n");

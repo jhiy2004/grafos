@@ -27,6 +27,7 @@ int* encontraCaminhos(Grafo *g, int s);
 int* buscaLargura(Grafo *g, int s);
 
 int* dijkstra(Grafo* g, int s);
+int* geradoraMinima(Grafo* g, int s);
 
 #include "matriz_adj.c"
 

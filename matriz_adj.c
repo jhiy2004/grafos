@@ -127,3 +127,39 @@ int* dijkstra(Grafo* g, int s) {
 	return pai;
 }
 
+int* geradoraMinima(Grafo* g, int s) {
+	int v, *pai = malloc(g->n * sizeof(int));
+	int t;
+	int *visitado = (int*)malloc(g->n * sizeof(int));
+	
+	FP* h = criarFprio(g->n);
+	for (v = 0; v < g->n; v++) {
+		pai[v] = -1;
+		insereFP(h, v, INT_MAX);
+		visitado[v] = 0;
+	}
+	pai[s] = s;
+	diminuiprioridade(h, s, 0);
+	visitado[0] = 1;
+
+	while (!vaziaFP(h)) {
+		imprimirHeap(h);
+		printf("\n");
+		v = extraiMinimoFP(h);
+		printf("V: %d\n", v);
+
+		visitado[v] = 1;
+
+		if (prioridadeFP(h, v) != INT_MAX)
+			for (int i = 0; i < g->n; i++){
+				if (g->adj[v][i] != 0 && !visitado[i]){
+					if (g->adj[v][i] < prioridadeFP(h, i)) {
+						diminuiprioridade(h, i, g->adj[v][i]);
+						pai[i] = v;
+					}
+				}
+			}
+	}
+	return pai;
+}
+
