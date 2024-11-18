@@ -4,6 +4,7 @@
 #include "grafo.h"
 #include "fila.h"
 #include "pilha.h"
+#include "heap_bin.h"
 
 // Criação do grafo
 P_GRAFO criarGrafo(int num){
@@ -153,37 +154,45 @@ BUSCA buscaEmLargura(P_GRAFO g, int s){
 }
 
 // Implementação de Dijkstra
-int * dijkstra(P_GRAFO g, int s){
+BUSCA dijkstra(P_GRAFO g, int s){
     int v;
-    int * pai = (int*) malloc(g->num * sizeof(int));
+    BUSCA resultado;
+    resultado.pai = (int*) malloc(g->num * sizeof(int));
+    resultado.custo = (int*) malloc(g->num * sizeof(int));
     P_NO t;
-    P_FP h = criarFPrio(g->n);
+    FP *h = criarFprio(g->num);
 
-    for(v = 0; v < g->n; v++){
-        pai[v] = -1;
-        insere(h, v, INT_MAX);
+    for(v = 0; v < g->num; v++){
+        resultado.pai[v] = -1;
+        resultado.custo[v] = INT_MAX;
+        insereFP(h, v, INT_MAX);
     }
 
-    pai[s] = s;
-    diminuiPrioridade(h, s, 0);
+    resultado.pai[s] = s;
+    resultado.custo[s] = 0;
+    diminuiprioridade(h, s, 0);
 
-    while(!vazia(h)){
-        v = extraiMinimo(h);
-        if(prioridade(h, v) != INT_MAX){
+    while(!vaziaFP(h)){
+        v = extraiMinimoFP(h);
+        int custoAtual = resultado.custo[v];
+
+        if(prioridadeFP(h, v) != INT_MAX){
             for(t = g->adjacencia[v]; t != NULL; t = t->prox){
-                if(prioridade(h, v) + t->peso < prioridade(h, t->v)){
-                    diminuiPrioridade(h, t->v, prioridade(h, v) + t->peso);
-                    pai[t->v] = v;
+                int novoCusto = custoAtual + t->peso;
+                if(prioridadeFP(h, v) + t->peso < prioridadeFP(h, t->v)){
+                    resultado.custo[t->v] = novoCusto;
+                    diminuiprioridade(h, t->v, prioridadeFP(h, v) + t->peso);
+                    resultado.pai[t->v] = v;
                 }
             }
         }
     }
 
-    return pai;
+    return resultado;
 }
 
 // Implementação da árvore geradora mínima
-BUSCA arvoreGeradoraMinimaPrim(P_GRAFO g, int raiz) {
+BUSCA arvoreGeradoraMinimaPrim(P_GRAFO g, int s) {
     BUSCA resultado;
     resultado.pai = (int*) malloc(g->num * sizeof(int));
     resultado.custo = (int*) malloc(g->num * sizeof(int));
@@ -194,8 +203,8 @@ BUSCA arvoreGeradoraMinimaPrim(P_GRAFO g, int raiz) {
         resultado.custo[i] = INT_MAX;
         resultado.pai[i] = -1;
     }
-    resultado.custo[raiz] = 0;
-    resultado.pai[raiz] = raiz;
+    resultado.custo[s] = 0;
+    resultado.pai[s] = s;
 
     for (int i = 0; i < g->num; i++) {
         // Escolher o vértice não visitado de menor custo
@@ -229,7 +238,11 @@ BUSCA arvoreGeradoraMinimaPrim(P_GRAFO g, int raiz) {
 void exibirResultadoBusca(BUSCA resultado, int numVertices) {
     printf("Resultado:\n");
     for (int i = 0; i < numVertices; i++) {
-        printf("Vértice %d: Pai = %d, Custo = %d\n", i, resultado.pai[i], resultado.custo[i]);
+        if(resultado.custo[i] == INT_MAX) {
+            printf("Vértice %d: Pai = %d, Custo = Infinito\n", i, resultado.pai[i]);
+        } else {
+            printf("Vértice %d: Pai = %d, Custo = %d\n", i, resultado.pai[i], resultado.custo[i]);
+        }
     }
 }
 

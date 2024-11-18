@@ -20,6 +20,13 @@ int main() {
         inserirAresta(grafo, origem, destino, peso);
     }
 
+    // Colocar esses inserir no script de teste
+    /* inserirAresta(grafo, 0, 1, 1); */
+    /* inserirAresta(grafo, 1, 2, 1); */
+    /* inserirAresta(grafo, 2, 3, 1); */
+    /* inserirAresta(grafo, 3, 4, 1); */
+    /* inserirAresta(grafo, 4, 0, 1); */
+
     // Menu de operações
     do {
         menu();
@@ -58,6 +65,12 @@ int main() {
             }
             case 4:
                 // Dijkstra
+                printf("Vértice inicial: ");
+                scanf("%d", &inicio);
+                BUSCA resultado = dijkstra(grafo, inicio);
+                exibirResultadoBusca(resultado, numVertices);
+                free(resultado.pai);
+                free(resultado.custo);
                 break;
             case 0:
                 printf("Saindo...\n");
