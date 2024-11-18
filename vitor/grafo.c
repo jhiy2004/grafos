@@ -153,6 +153,34 @@ BUSCA buscaEmLargura(P_GRAFO g, int s){
 }
 
 // Implementação de Dijkstra
+int * dijkstra(P_GRAFO g, int s){
+    int v;
+    int * pai = (int*) malloc(g->num * sizeof(int));
+    P_NO t;
+    P_FP h = criarFPrio(g->n);
+
+    for(v = 0; v < g->n; v++){
+        pai[v] = -1;
+        insere(h, v, INT_MAX);
+    }
+
+    pai[s] = s;
+    diminuiPrioridade(h, s, 0);
+
+    while(!vazia(h)){
+        v = extraiMinimo(h);
+        if(prioridade(h, v) != INT_MAX){
+            for(t = g->adjacencia[v]; t != NULL; t = t->prox){
+                if(prioridade(h, v) + t->peso < prioridade(h, t->v)){
+                    diminuiPrioridade(h, t->v, prioridade(h, v) + t->peso);
+                    pai[t->v] = v;
+                }
+            }
+        }
+    }
+
+    return pai;
+}
 
 // Implementação da árvore geradora mínima
 BUSCA arvoreGeradoraMinimaPrim(P_GRAFO g, int raiz) {

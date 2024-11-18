@@ -43,6 +43,7 @@ BUSCA buscaEmLargura(P_GRAFO g, int s);
 BUSCA buscaEmProfundidade(P_GRAFO g, int s);
 
 // Dijkstra
+int * dijkstra(P_GRAFO g, int s);
 
 // Árvore Geradora Mínima
 BUSCA arvoreGeradoraMinimaPrim(P_GRAFO g, int raiz);
