@@ -1,85 +1,102 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "grafo.h"
+#include "lista_adj.h"
+//#include "matriz_adj.h"
 
 int main() {
     int opcao, numVertices, origem, destino, peso, inicio;
     P_GRAFO grafo;
 
-    // Criar o grafo
-    printf("Número de vértices: ");
-    scanf("%d", &numVertices);
-    grafo = criarGrafo(numVertices);
+    menuTipoGrafo();
+    scanf("%d", &opcao);
 
-    // Adicionar arestas
-    printf("Adicione as arestas no formato: origem destino peso (digite -1 para encerrar):\n");
-    while (1) {
-        scanf("%d", &origem);
-        if (origem == -1) break;
-        scanf("%d %d", &destino, &peso);
-        inserirAresta(grafo, origem, destino, peso);
+    switch(opcao){
+        case 1: {
+            // Grafo com listas de adjacencia
+            // Criar o grafo
+            printf("Número de vértices: ");
+            scanf("%d", &numVertices);
+            grafo = criarGrafoLA(numVertices);
+
+            // Adicionar arestas
+            printf("Adicione as arestas no formato: origem destino peso (digite -1 para encerrar):\n");
+            while (1) {
+                scanf("%d", &origem);
+                if (origem == -1) break;
+                scanf("%d %d", &destino, &peso);
+                inserirArestaLA(grafo, origem, destino, peso);
+            }
+
+            // Menu de operações
+            do{
+                menu();
+                scanf("%d", &opcao);
+
+                switch(opcao) {
+                    case 1: {
+                        // Busca em Largura
+                        printf("Vértice inicial: ");
+                        scanf("%d", &inicio);
+                        BUSCA resultado = buscaEmLarguraLA(grafo, inicio);
+                        exibirResultadoBusca(resultado, numVertices);
+                        free(resultado.pai);
+                        free(resultado.custo);
+                        break;
+                    }
+                    case 2: {
+                        // Busca em Profundidade
+                        printf("Vértice inicial: ");
+                        scanf("%d", &inicio);
+                        BUSCA resultado = buscaEmProfundidadeLA(grafo, inicio);
+                        exibirResultadoBusca(resultado, numVertices);
+                        free(resultado.pai);
+                        free(resultado.custo);
+                        break;
+                    }
+                    case 3: {
+                        // Árvore Geradora Mínima (Prim)
+                        printf("Vértice raiz: ");
+                        scanf("%d", &inicio);
+                        BUSCA resultado = arvoreGeradoraMinimaPrimLA(grafo, inicio);
+                        exibirResultadoBusca(resultado, numVertices);
+                        free(resultado.pai);
+                        free(resultado.custo);
+                        break;
+                    }
+                    case 4:
+                        // Dijkstra
+                        printf("Vértice inicial: ");
+                        scanf("%d", &inicio);
+                        BUSCA resultado = dijkstraLA(grafo, inicio);
+                        exibirResultadoBusca(resultado, numVertices);
+                        free(resultado.pai);
+                        free(resultado.custo);
+                        break;
+                    case 0:
+                        printf("Saindo...\n");
+                        break;
+                    default:
+                        printf("Opção inválida.\n");
+                }
+                printf("\nPressione Enter para continuar...");
+                getchar();
+                getchar();
+                system("clear");
+            } while (opcao != 0);
+
+            liberarGrafoLA(grafo);
+            break;
+        }
+        case 2: {
+            // Grafo com matriz de adjacencia
+            break;
+        }
+        case 0:
+            printf("Saindo...\n");
+            break;
+        default:
+            printf("Opção inválida.\n");
     }
 
-    // Colocar esses inserir no script de teste
-    /* inserirAresta(grafo, 0, 1, 1); */
-    /* inserirAresta(grafo, 1, 2, 1); */
-    /* inserirAresta(grafo, 2, 3, 1); */
-    /* inserirAresta(grafo, 3, 4, 1); */
-    /* inserirAresta(grafo, 4, 0, 1); */
-
-    // Menu de operações
-    do {
-        menu();
-        scanf("%d", &opcao);
-
-        switch (opcao) {
-            case 1: {
-                // Busca em Largura
-                printf("Vértice inicial: ");
-                scanf("%d", &inicio);
-                BUSCA resultado = buscaEmLargura(grafo, inicio);
-                exibirResultadoBusca(resultado, numVertices);
-                free(resultado.pai);
-                free(resultado.custo);
-                break;
-            }
-            case 2: {
-                // Busca em Profundidade
-                printf("Vértice inicial: ");
-                scanf("%d", &inicio);
-                BUSCA resultado = buscaEmProfundidade(grafo, inicio);
-                exibirResultadoBusca(resultado, numVertices);
-                free(resultado.pai);
-                free(resultado.custo);
-                break;
-            }
-            case 3: {
-                // Árvore Geradora Mínima (Prim)
-                printf("Vértice raiz: ");
-                scanf("%d", &inicio);
-                BUSCA resultado = arvoreGeradoraMinimaPrim(grafo, inicio);
-                exibirResultadoBusca(resultado, numVertices);
-                free(resultado.pai);
-                free(resultado.custo);
-                break;
-            }
-            case 4:
-                // Dijkstra
-                printf("Vértice inicial: ");
-                scanf("%d", &inicio);
-                BUSCA resultado = dijkstra(grafo, inicio);
-                exibirResultadoBusca(resultado, numVertices);
-                free(resultado.pai);
-                free(resultado.custo);
-                break;
-            case 0:
-                printf("Saindo...\n");
-                break;
-            default:
-                printf("Opção inválida.\n");
-        }
-    } while (opcao != 0);
-
-    liberarGrafo(grafo);
     return 0;
 }

@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-#include "grafo.h"
+#include "lista_adj.h"
 #include "fila.h"
 #include "pilha.h"
 #include "heap_bin.h"
 
 // Criação do grafo
-P_GRAFO criarGrafo(int num){
+P_GRAFO criarGrafoLA(int num){
     int i;
     P_GRAFO g = (P_GRAFO) malloc(sizeof(GRAFO));
     g->num = num;
@@ -21,30 +21,30 @@ P_GRAFO criarGrafo(int num){
 }
 
 // Liberação do grafo
-void liberarGrafo(P_GRAFO g){
+void liberarGrafoLA(P_GRAFO g){
     int i;
     for(i=0; i < g->num; i++){
-        liberarLista(g->adjacencia[i]);
+        liberarListaLA(g->adjacencia[i]);
     }
     free(g->adjacencia);
     free(g);
 }
 
 // Liberar as listas do grafo
-void liberarLista(P_NO lista){
+void liberarListaLA(P_NO lista){
     while(lista != NULL){
-        liberarLista(lista->prox);
+        liberarListaLA(lista->prox);
         free(lista);
     }
 }
 
 // Adicionar aresta ao grafo
-void inserirAresta(P_GRAFO g, int u, int v, int peso){
-    g->adjacencia[v] = inserirNaLista(g->adjacencia[v], u, peso);
-    g->adjacencia[u] = inserirNaLista(g->adjacencia[u], v, peso);
+void inserirArestaLA(P_GRAFO g, int u, int v, int peso){
+    g->adjacencia[v] = inserirNaListaLA(g->adjacencia[v], u, peso);
+    g->adjacencia[u] = inserirNaListaLA(g->adjacencia[u], v, peso);
 }
 
-P_NO inserirNaLista(P_NO lista, int v, int peso){
+P_NO inserirNaListaLA(P_NO lista, int v, int peso){
     P_NO novo = (P_NO) malloc(sizeof(NO));
     novo->v = v;
     novo->peso = peso;
@@ -53,12 +53,12 @@ P_NO inserirNaLista(P_NO lista, int v, int peso){
 }
 
 // Remover aresta do grafo
-void removerAresta(P_GRAFO g, int u, int v){
-    g->adjacencia[u] = removerDaLista(g->adjacencia[u], v);
-    g->adjacencia[v] = removerDaLista(g->adjacencia[v], u);
+void removerArestaLA(P_GRAFO g, int u, int v){
+    g->adjacencia[u] = removerDaListaLA(g->adjacencia[u], v);
+    g->adjacencia[v] = removerDaListaLA(g->adjacencia[v], u);
 }
 
-P_NO removerDaLista(P_NO lista, int v){
+P_NO removerDaListaLA(P_NO lista, int v){
     P_NO proximo;
     if(lista == NULL){
         return NULL;
@@ -67,13 +67,13 @@ P_NO removerDaLista(P_NO lista, int v){
         free(lista);
         return proximo;
     }else{
-        lista->prox = removerDaLista(lista->prox, v);
+        lista->prox = removerDaListaLA(lista->prox, v);
         return lista;
     }
 }
 
 // Implementação da Busca em Profundidade
-BUSCA buscaEmProfundidade(P_GRAFO g, int s){
+BUSCA buscaEmProfundidadeLA(P_GRAFO g, int s){
     int v;
     P_NO t;
     BUSCA resultado;
@@ -113,7 +113,7 @@ BUSCA buscaEmProfundidade(P_GRAFO g, int s){
 }
 
 // Implementação da Busca em Largura
-BUSCA buscaEmLargura(P_GRAFO g, int s){
+BUSCA buscaEmLarguraLA(P_GRAFO g, int s){
     int v;
     P_NO t;
     BUSCA resultado;
@@ -154,7 +154,7 @@ BUSCA buscaEmLargura(P_GRAFO g, int s){
 }
 
 // Implementação de Dijkstra
-BUSCA dijkstra(P_GRAFO g, int s){
+BUSCA dijkstraLA(P_GRAFO g, int s){
     int v;
     BUSCA resultado;
     resultado.pai = (int*) malloc(g->num * sizeof(int));
@@ -192,7 +192,7 @@ BUSCA dijkstra(P_GRAFO g, int s){
 }
 
 // Implementação da árvore geradora mínima
-BUSCA arvoreGeradoraMinimaPrim(P_GRAFO g, int s) {
+BUSCA arvoreGeradoraMinimaPrimLA(P_GRAFO g, int s) {
     BUSCA resultado;
     resultado.pai = (int*) malloc(g->num * sizeof(int));
     resultado.custo = (int*) malloc(g->num * sizeof(int));
@@ -235,18 +235,26 @@ BUSCA arvoreGeradoraMinimaPrim(P_GRAFO g, int s) {
     return resultado;
 }
 
-void exibirResultadoBusca(BUSCA resultado, int numVertices) {
-    printf("Resultado:\n");
-    for (int i = 0; i < numVertices; i++) {
-        if(resultado.custo[i] == INT_MAX) {
+void exibirResultadoBusca(BUSCA resultado, int numVertices){
+    printf("\nResultado:\n\n");
+    for(int i = 0; i < numVertices; i++){
+        if(resultado.custo[i] == INT_MAX){
             printf("Vértice %d: Pai = %d, Custo = Infinito\n", i, resultado.pai[i]);
-        } else {
+        }else{
             printf("Vértice %d: Pai = %d, Custo = %d\n", i, resultado.pai[i], resultado.custo[i]);
         }
     }
 }
 
-void menu() {
+void menuTipoGrafo(){
+    printf("\n--------- MENU ---------\n");
+    printf("1. Grafo com Listas de Adjacência\n");
+    printf("2. Grafo com Matriz de Adjacência\n");
+    printf("0. Sair\n");
+    printf("Escolha: ");
+}
+
+void menu(){
     printf("\n--------- MENU ---------\n");
     printf("1. Busca em Largura\n");
     printf("2. Busca em Profundidade\n");

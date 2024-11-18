@@ -22,33 +22,35 @@ typedef struct busca {
 } BUSCA;
 
 // Função de crição do grafo
-P_GRAFO criarGrafo(int num);
+P_GRAFO criarGrafoLA(int num);
 
 // Funções de liberação do grafo
-void liberarGrafo(P_GRAFO g);
-void liberarLista(P_NO lista);
+void liberarGrafoLA(P_GRAFO g);
+void liberarListaLA(P_NO lista);
 
 // Funções de remover aresta
-void removerAresta(P_GRAFO g, int u, int v);
-P_NO removerDaLista(P_NO lista, int v);
+void removerArestaLA(P_GRAFO g, int u, int v);
+P_NO removerDaListaLA(P_NO lista, int v);
 
 // Funções de inserir aresta
-void inserirAresta(P_GRAFO g, int u, int v, int peso);
-P_NO inserirNaLista(P_NO lista, int v, int peso);
+void inserirArestaLA(P_GRAFO g, int u, int v, int peso);
+P_NO inserirNaListaLA(P_NO lista, int v, int peso);
 
 // Busca em Largura
-BUSCA buscaEmLargura(P_GRAFO g, int s);
+BUSCA buscaEmLarguraLA(P_GRAFO g, int s);
 
 // Busca em Profundidade
-BUSCA buscaEmProfundidade(P_GRAFO g, int s);
+BUSCA buscaEmProfundidadeLA(P_GRAFO g, int s);
 
 // Dijkstra
-BUSCA dijkstra(P_GRAFO g, int s);
+BUSCA dijkstraLA(P_GRAFO g, int s);
 
 // Árvore Geradora Mínima
-BUSCA arvoreGeradoraMinimaPrim(P_GRAFO g, int s);
+BUSCA arvoreGeradoraMinimaPrimLA(P_GRAFO g, int s);
 
 void exibirResultadoBusca(BUSCA resultado, int numVertices);
+
+void menuTipoGrafo();
 
 void menu();
 
