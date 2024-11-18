@@ -12,7 +12,6 @@ typedef struct {
 	int n, tamanho;
 } FP;
 
-
 FP* criarFprio(int n);
 
 int paiFP(int i);
@@ -30,7 +29,5 @@ void minHeapify(FP* fp, int i);
 
 int extraiMinimoFP(FP* fp);
 void imprimirHeap(FP* fp);
-
-#include "heap_bin.c"
 
 #endif

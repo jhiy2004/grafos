@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include "heap_bin.h"
+
 FP* criarFprio(int n){
 	FP* novo = (FP*) malloc(sizeof(FP));
 

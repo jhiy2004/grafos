@@ -2,7 +2,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -pedantic -std=c11
 TARGET = grafo
-SRCS = main.c lista_adj.c pilha.c fila.c
+SRCS = main.c lista_adj.c matriz_adj.c auxiliares.c pilha.c fila.c heap_bin.c
 OBJS = $(SRCS:.c=.o)
 
 # Regra principal
