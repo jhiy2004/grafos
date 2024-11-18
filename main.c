@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "grafos/lista_adj.h"
 #include "grafos/matriz_adj.h"
 #include "auxiliares/auxiliares.h"
