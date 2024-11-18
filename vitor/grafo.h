@@ -16,6 +16,11 @@ typedef struct GRAFO {
 
 typedef GRAFO * P_GRAFO;
 
+typedef struct busca {
+    int *pai;
+    int *custo;
+} BUSCA;
+
 // Função de crição do grafo
 P_GRAFO criarGrafo(int num);
 
@@ -32,17 +37,17 @@ void inserirAresta(P_GRAFO g, int u, int v, int peso);
 P_NO inserirNaLista(P_NO lista, int v, int peso);
 
 // Busca em Largura
-int * buscaEmLargura(P_GRAFO g, int s);
+BUSCA buscaEmLargura(P_GRAFO g, int s);
 
 // Busca em Profundidade
-int * buscaEmProfundidade(P_GRAFO g, int s);
+BUSCA buscaEmProfundidade(P_GRAFO g, int s);
 
 // Dijkstra
 
 // Árvore Geradora Mínima
-int * arvoreGeradoraMinimaPrim(P_GRAFO g, int raiz);
+BUSCA arvoreGeradoraMinimaPrim(P_GRAFO g, int raiz);
 
-void exibirResultadoBusca(int *resultado, int numVertices);
+void exibirResultadoBusca(BUSCA resultado, int numVertices);
 
 void menu();
 

@@ -30,27 +30,30 @@ int main() {
                 // Busca em Largura
                 printf("Vértice inicial: ");
                 scanf("%d", &inicio);
-                int *resultado = buscaEmLargura(grafo, inicio);
+                BUSCA resultado = buscaEmLargura(grafo, inicio);
                 exibirResultadoBusca(resultado, numVertices);
-                free(resultado);
+                free(resultado.pai);
+                free(resultado.custo);
                 break;
             }
             case 2: {
                 // Busca em Profundidade
                 printf("Vértice inicial: ");
                 scanf("%d", &inicio);
-                int *resultado = buscaEmProfundidade(grafo, inicio);
+                BUSCA resultado = buscaEmProfundidade(grafo, inicio);
                 exibirResultadoBusca(resultado, numVertices);
-                free(resultado);
+                free(resultado.pai);
+                free(resultado.custo);
                 break;
             }
             case 3: {
                 // Árvore Geradora Mínima (Prim)
                 printf("Vértice raiz: ");
                 scanf("%d", &inicio);
-                int *resultado = arvoreGeradoraMinimaPrim(grafo, inicio);
+                BUSCA resultado = arvoreGeradoraMinimaPrim(grafo, inicio);
                 exibirResultadoBusca(resultado, numVertices);
-                free(resultado);
+                free(resultado.pai);
+                free(resultado.custo);
                 break;
             }
             case 4:

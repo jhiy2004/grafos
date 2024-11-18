@@ -72,21 +72,25 @@ P_NO removerDaLista(P_NO lista, int v){
 }
 
 // Implementação da Busca em Profundidade
-int * buscaEmProfundidade(P_GRAFO g, int s){
+BUSCA buscaEmProfundidade(P_GRAFO g, int s){
     int v;
     P_NO t;
-    int *pai = (int*) malloc(g->num * sizeof(int));
+    BUSCA resultado;
+    resultado.pai = (int *)malloc(g->num * sizeof(int));
+    resultado.custo = (int *)malloc(g->num * sizeof(int));
     int *visitado = (int*) malloc(g->num * sizeof(int));
 
     P_PILHA p = criarPilha();
 
     for(v=0; v < g->num; v++){
-        pai[v] = -1;
+        resultado.pai[v] = -1;
+        resultado.custo[v] = 0;
         visitado[v] = 0;
     }
 
     empilhar(p, s);
-    pai[s] = s;
+    resultado.pai[s] = s;
+    resultado.custo[s] = 0;
 
     while(!pilhaVazia(p)){
         v = desempilar(p);
@@ -94,7 +98,8 @@ int * buscaEmProfundidade(P_GRAFO g, int s){
 
         for(t = g->adjacencia[v]; t != NULL; t = t->prox){
             if(!visitado[t->v]){
-                pai[t->v] = v;
+                resultado.pai[t->v] = v;
+                resultado.custo[t->v] = resultado.custo[v] + t->peso;
                 empilhar(p, t->v);
             }
         }
@@ -103,25 +108,29 @@ int * buscaEmProfundidade(P_GRAFO g, int s){
     destroiPilha(p);
     free(visitado);
 
-    return pai;
+    return resultado;
 }
 
 // Implementação da Busca em Largura
-int * buscaEmLargura(P_GRAFO g, int s){
+BUSCA buscaEmLargura(P_GRAFO g, int s){
     int v;
     P_NO t;
-    int *pai = (int*) malloc(g->num * sizeof(int));
+    BUSCA resultado;
+    resultado.pai = (int *)malloc(g->num * sizeof(int));
+    resultado.custo = (int *)malloc(g->num * sizeof(int));
     int *visitado = (int*) malloc(g->num * sizeof(int));
 
     P_FILA f = criarFila();
 
     for(v=0; v < g->num; v++){
-        pai[v] = -1;
+        resultado.pai[v] = -1;
+        resultado.custo[v] = 0;
         visitado[v] = 0;
     }
 
     enfileira(f, s);
-    pai[s] = s;
+    resultado.pai[s] = s;
+    resultado.custo[s] = 0;
     visitado[s] = 1;
 
     while(!filaVazia(f)){
@@ -130,7 +139,8 @@ int * buscaEmLargura(P_GRAFO g, int s){
         for(t = g->adjacencia[v]; t != NULL; t = t->prox){
             if(!visitado[t->v]){
                 visitado[t->v] = 1;
-                pai[t->v] = v;
+                resultado.pai[t->v] = v;
+                resultado.custo[t->v] = resultado.custo[v] + t->peso;
                 enfileira(f, t->v);
             }
         }
@@ -139,35 +149,36 @@ int * buscaEmLargura(P_GRAFO g, int s){
     destroiFila(f);
     free(visitado);
 
-    return pai;
+    return resultado;
 }
 
 // Implementação de Dijkstra
 
 // Implementação da árvore geradora mínima
-int * arvoreGeradoraMinimaPrim(P_GRAFO g, int raiz) {
-    int *pai = (int*) malloc(g->num * sizeof(int));
-    int *custo = (int*) malloc(g->num * sizeof(int));
+BUSCA arvoreGeradoraMinimaPrim(P_GRAFO g, int raiz) {
+    BUSCA resultado;
+    resultado.pai = (int*) malloc(g->num * sizeof(int));
+    resultado.custo = (int*) malloc(g->num * sizeof(int));
     int *visitado = (int*) calloc(g->num, sizeof(int));
 
     // Inicialização
     for (int i = 0; i < g->num; i++) {
-        custo[i] = INT_MAX;
-        pai[i] = -1;
+        resultado.custo[i] = INT_MAX;
+        resultado.pai[i] = -1;
     }
-    custo[raiz] = 0;
-    pai[raiz] = raiz;
+    resultado.custo[raiz] = 0;
+    resultado.pai[raiz] = raiz;
 
     for (int i = 0; i < g->num; i++) {
         // Escolher o vértice não visitado de menor custo
         int u = -1;
         for (int v = 0; v < g->num; v++) {
-            if (!visitado[v] && (u == -1 || custo[v] < custo[u])) {
+            if (!visitado[v] && (u == -1 || resultado.custo[v] < resultado.custo[u])) {
                 u = v;
             }
         }
 
-        if (custo[u] == INT_MAX) {
+        if (resultado.custo[u] == INT_MAX) {
             break; // Grafo desconectado
         }
 
@@ -175,23 +186,22 @@ int * arvoreGeradoraMinimaPrim(P_GRAFO g, int raiz) {
 
         // Atualizar os custos dos vizinhos
         for (P_NO t = g->adjacencia[u]; t != NULL; t = t->prox) {
-            if (!visitado[t->v] && t->peso < custo[t->v]) {
-                custo[t->v] = t->peso;
-                pai[t->v] = u;
+            if (!visitado[t->v] && t->peso < resultado.custo[t->v]) {
+                resultado.custo[t->v] = t->peso;
+                resultado.pai[t->v] = u;
             }
         }
     }
 
-    free(custo);
     free(visitado);
 
-    return pai;
+    return resultado;
 }
 
-void exibirResultadoBusca(int *resultado, int numVertices) {
+void exibirResultadoBusca(BUSCA resultado, int numVertices) {
     printf("Resultado:\n");
     for (int i = 0; i < numVertices; i++) {
-        printf("Vértice %d: Pai = %d\n", i, resultado[i]);
+        printf("Vértice %d: Pai = %d, Custo = %d\n", i, resultado.pai[i], resultado.custo[i]);
     }
 }
 
