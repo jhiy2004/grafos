@@ -1,7 +1,7 @@
 #ifndef MATRIZ_ADJ_H
 #define MATRIZ_ADJ_H
 
-#include "auxiliares.h"
+#include "../auxiliares/auxiliares.h"
 
 typedef struct Grafo {
 	int **adj;

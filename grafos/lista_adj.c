@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <limits.h>
 #include "lista_adj.h"
-#include "fila.h"
-#include "pilha.h"
-#include "heap_bin.h"
+#include "../auxiliares/fila.h"
+#include "../auxiliares/pilha.h"
+#include "../auxiliares/heap_bin.h"
 
 // Criação do grafo
 P_GRAFO criarGrafoLA(int num){

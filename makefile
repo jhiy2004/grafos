@@ -1,8 +1,11 @@
 # Variáveis
 CC = gcc
-CFLAGS = -Wall -Wextra -pedantic -std=c11
+CFLAGS = -Wall -Wextra -pedantic -std=c11 -Iauxiliares -Igrafos
 TARGET = grafo
-SRCS = main.c lista_adj.c matriz_adj.c auxiliares.c pilha.c fila.c heap_bin.c
+SRCS = main.c \
+	   grafos/lista_adj.c grafos/matriz_adj.c \
+	   auxiliares/auxiliares.c auxiliares/pilha.c \
+	   auxiliares/fila.c auxiliares/heap_bin.c
 OBJS = $(SRCS:.c=.o)
 
 # Regra principal

@@ -1,7 +1,7 @@
 #ifndef GRAFO_H
 #define GRAFO_H
 
-#include "auxiliares.h"
+#include "../auxiliares/auxiliares.h"
 
 typedef struct NO {
     int v;

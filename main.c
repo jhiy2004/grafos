@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "lista_adj.h"
-#include "matriz_adj.h"
-#include "auxiliares.h"
+#include "grafos/lista_adj.h"
+#include "grafos/matriz_adj.h"
+#include "auxiliares/auxiliares.h"
 
 int main() {
     int opcao, numVertices, origem, destino, peso, inicio;

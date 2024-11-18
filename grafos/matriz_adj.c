@@ -1,9 +1,9 @@
 #include <limits.h>
 #include <stdlib.h>
-#include "fila.h"
-#include "pilha.h"
+#include "../auxiliares/fila.h"
+#include "../auxiliares/pilha.h"
+#include "../auxiliares/heap_bin.h"
 #include "matriz_adj.h"
-#include "heap_bin.h"
 
 Grafo* criarGrafoMA(int n){
 	int i = 0;
@@ -130,7 +130,6 @@ BUSCA dijkstraMA(Grafo* g, int s) {
     BUSCA resultado;
     resultado.pai = (int*) malloc(g->n * sizeof(int));
     resultado.custo = (int*) malloc(g->n * sizeof(int));
-	int t;
 	FP* h = criarFprio(g->n);
 	for (v = 0; v < g->n; v++) {
 		resultado.pai[v] = -1;
@@ -165,7 +164,6 @@ BUSCA geradoraMinimaMA(Grafo* g, int s) {
     BUSCA resultado;
     resultado.pai = (int*) malloc(g->n * sizeof(int));
     resultado.custo = (int*) malloc(g->n * sizeof(int));
-	int t;
 	int *visitado = (int*)malloc(g->n * sizeof(int));
 	
 	FP* h = criarFprio(g->n);
