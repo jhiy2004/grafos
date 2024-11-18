@@ -1,57 +1,103 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
+#include "lista_adj.h"
 #include "matriz_adj.h"
+#include "auxiliares.h"
 
-int main(){
-	Grafo* g = criarGrafo(9);
+int main() {
+    int opcao, numVertices, origem, destino, peso, inicio;
+    P_GRAFO grafo;
 
-	inserirArestaPeso(g, 0, 1, 4);  // Aresta de 0 a 1 com peso 4
-	inserirArestaPeso(g, 0, 7, 8);  // Aresta de 0 a 7 com peso 8
+    menuTipoGrafo();
+    scanf("%d", &opcao);
 
-	inserirArestaPeso(g, 1, 0, 4);  // Aresta de 1 a 0 com peso 4
-	inserirArestaPeso(g, 1, 2, 8);  // Aresta de 1 a 2 com peso 8
-	inserirArestaPeso(g, 1, 7, 11); // Aresta de 1 a 7 com peso 11
+    switch(opcao){
+        case 1: {
+            // Grafo com listas de adjacencia
+            // Criar o grafo
+            printf("Número de vértices: ");
+            scanf("%d", &numVertices);
+            grafo = criarGrafoLA(numVertices);
 
-	inserirArestaPeso(g, 2, 1, 8);  // Aresta de 2 a 1 com peso 8
-	inserirArestaPeso(g, 2, 3, 7);  // Aresta de 2 a 3 com peso 7
-	inserirArestaPeso(g, 2, 5, 4);  // Aresta de 2 a 5 com peso 4
-	inserirArestaPeso(g, 2, 8, 2);  // Aresta de 2 a 8 com peso 2
+            // Adicionar arestas
+            printf("Adicione as arestas no formato: origem destino peso (digite -1 para encerrar):\n");
+            while (1) {
+                scanf("%d", &origem);
+                if (origem == -1) break;
+                scanf("%d %d", &destino, &peso);
+                inserirArestaLA(grafo, origem, destino, peso);
+            }
 
-	inserirArestaPeso(g, 3, 2, 7);  // Aresta de 3 a 2 com peso 7
-	inserirArestaPeso(g, 3, 4, 9);  // Aresta de 3 a 4 com peso 9
-	inserirArestaPeso(g, 3, 5, 14); // Aresta de 3 a 5 com peso 14
+            // Menu de operações
+            do{
+                menu();
+                scanf("%d", &opcao);
 
-	inserirArestaPeso(g, 4, 3, 9);  // Aresta de 4 a 3 com peso 9
-	inserirArestaPeso(g, 4, 5, 10); // Aresta de 4 a 5 com peso 10
+                switch(opcao) {
+                    case 1: {
+                        // Busca em Largura
+                        printf("Vértice inicial: ");
+                        scanf("%d", &inicio);
+                        BUSCA resultado = buscaEmLarguraLA(grafo, inicio);
+                        exibirResultadoBusca(resultado, numVertices);
+                        free(resultado.pai);
+                        free(resultado.custo);
+                        break;
+                    }
+                    case 2: {
+                        // Busca em Profundidade
+                        printf("Vértice inicial: ");
+                        scanf("%d", &inicio);
+                        BUSCA resultado = buscaEmProfundidadeLA(grafo, inicio);
+                        exibirResultadoBusca(resultado, numVertices);
+                        free(resultado.pai);
+                        free(resultado.custo);
+                        break;
+                    }
+                    case 3: {
+                        // Árvore Geradora Mínima (Prim)
+                        printf("Vértice raiz: ");
+                        scanf("%d", &inicio);
+                        BUSCA resultado = arvoreGeradoraMinimaPrimLA(grafo, inicio);
+                        exibirResultadoBusca(resultado, numVertices);
+                        free(resultado.pai);
+                        free(resultado.custo);
+                        break;
+                    }
+                    case 4:
+                        // Dijkstra
+                        printf("Vértice inicial: ");
+                        scanf("%d", &inicio);
+                        BUSCA resultado = dijkstraLA(grafo, inicio);
+                        exibirResultadoBusca(resultado, numVertices);
+                        free(resultado.pai);
+                        free(resultado.custo);
+                        break;
+                    case 0:
+                        printf("Saindo...\n");
+                        break;
+                    default:
+                        printf("Opção inválida.\n");
+                }
+                printf("\nPressione Enter para continuar...");
+                getchar();
+                getchar();
+                system("clear");
+            } while (opcao != 0);
 
-	inserirArestaPeso(g, 5, 2, 4);  // Aresta de 5 a 2 com peso 4
-	inserirArestaPeso(g, 5, 3, 14); // Aresta de 5 a 3 com peso 14
-	inserirArestaPeso(g, 5, 4, 10); // Aresta de 5 a 4 com peso 10
-	inserirArestaPeso(g, 5, 6, 2);  // Aresta de 5 a 6 com peso 2
+            liberarGrafoLA(grafo);
+            break;
+        }
+        case 2: {
+            // Grafo com matriz de adjacencia
+            break;
+        }
+        case 0:
+            printf("Saindo...\n");
+            break;
+        default:
+            printf("Opção inválida.\n");
+    }
 
-	inserirArestaPeso(g, 6, 5, 2);  // Aresta de 6 a 5 com peso 2
-	inserirArestaPeso(g, 6, 7, 1);  // Aresta de 6 a 7 com peso 1
-	inserirArestaPeso(g, 6, 8, 6);  // Aresta de 6 a 8 com peso 6
-
-	inserirArestaPeso(g, 7, 0, 8);  // Aresta de 7 a 0 com peso 8
-	inserirArestaPeso(g, 7, 1, 11); // Aresta de 7 a 1 com peso 11
-	inserirArestaPeso(g, 7, 6, 1);  // Aresta de 7 a 6 com peso 1
-	inserirArestaPeso(g, 7, 8, 7);  // Aresta de 7 a 8 com peso 7
-
-	inserirArestaPeso(g, 8, 2, 2);  // Aresta de 8 a 2 com peso 2
-	inserirArestaPeso(g, 8, 6, 6);  // Aresta de 8 a 6 com peso 6
-	inserirArestaPeso(g, 8, 7, 7);  // Aresta de 8 a 7 com peso 7
-
-	imprimirArestas(g);
-
-	int* pai = geradoraMinima(g, 0);
-
-	printf("[");
-	for(int i = 0; i < g->n; i++){
-		printf("%d, ", pai[i]);
-	}
-	printf("]\n");
-
-	return 0;
+    return 0;
 }

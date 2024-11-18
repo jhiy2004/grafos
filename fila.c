@@ -1,60 +1,47 @@
-Fila* criarFila(){
-	Fila* novo = (Fila*) malloc(sizeof(Fila));
+#include <stdlib.h>
+#include "fila.h"
 
-	novo->inicio = NULL;
-	novo->fim = NULL;
-
-	return novo;
+P_FILA criarFila() {
+    P_FILA f = (P_FILA) malloc(sizeof(FILA));
+    f->inicio = NULL;
+    f->fim = NULL;
+    return f;
 }
 
-void inserirFila(Fila *f, int valor){
-	noFila* novo = (noFila*) malloc(sizeof(noFila));
-
-	novo-> valor = valor;
-	novo->prox = NULL;
-
-	if(f->inicio == NULL && f->fim == NULL){
-		f->inicio = novo;
-		f->fim = novo;
-		return;
-	}
-
-	f->fim->prox = novo;
-	f->fim = novo;
+int filaVazia(P_FILA f) {
+    return f->inicio == NULL;
 }
 
-int removerFila(Fila *f){
-	int valor = 0;
+void enfileira(P_FILA f, int valor) {
+    P_NO_FILA novo = (P_NO_FILA) malloc(sizeof(NO_FILA));
 
-	if(f->inicio == f->fim){
-		valor = f->inicio->valor;
-		free(f->inicio);
+    novo->valor = valor;
+    novo->prox = NULL;
 
-		f->inicio = NULL;
-		f->fim = NULL;
-
-		return valor;
-	}
-
-	noFila* temp = f->inicio;
-	valor = temp->valor;
-
-	f->inicio = temp->prox;
-	free(temp);
-
-	return valor;
+    if (filaVazia(f)) {
+        f->inicio = novo;
+    } else {
+        f->fim->prox = novo;
+    }
+    f->fim = novo;
 }
 
-int estaVazia(Fila *f){
-	if(f->inicio == NULL && f->fim == NULL){
-		return 1;
-	}
-	return 0;
+int desenfileira(P_FILA f) {
+    P_NO_FILA temp = f->inicio;
+    int valor = temp->valor;
+
+    f->inicio = temp->prox;
+    if (f->inicio == NULL) {
+        f->fim = NULL;
+    }
+
+    free(temp);
+    return valor;
 }
 
-int destruirFila(Fila* f){
-	while(!estaVazia(f)){
-		removerFila(f);
-	}
-	free(f);
+void destroiFila(P_FILA f) {
+    while (!filaVazia(f)) {
+        desenfileira(f);
+    }
+    free(f);
 }

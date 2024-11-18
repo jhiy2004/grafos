@@ -1,6 +1,8 @@
 #ifndef GRAFO_H
 #define GRAFO_H
 
+#include "auxiliares.h"
+
 typedef struct NO {
     int v;
     int peso;
@@ -15,11 +17,6 @@ typedef struct GRAFO {
 } GRAFO;
 
 typedef GRAFO * P_GRAFO;
-
-typedef struct busca {
-    int *pai;
-    int *custo;
-} BUSCA;
 
 // Função de crição do grafo
 P_GRAFO criarGrafoLA(int num);
@@ -47,11 +44,5 @@ BUSCA dijkstraLA(P_GRAFO g, int s);
 
 // Árvore Geradora Mínima
 BUSCA arvoreGeradoraMinimaPrimLA(P_GRAFO g, int s);
-
-void exibirResultadoBusca(BUSCA resultado, int numVertices);
-
-void menuTipoGrafo();
-
-void menu();
 
 #endif

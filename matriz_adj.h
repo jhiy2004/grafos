@@ -1,34 +1,30 @@
 #ifndef MATRIZ_ADJ_H
 #define MATRIZ_ADJ_H
 
-#include "fila.h"
-#include "heap_bin.h"
+#include "auxiliares.h"
 
 typedef struct Grafo {
 	int **adj;
 	int n;
 } Grafo;
 
-Grafo* criarGrafo(int n);
-void destruirGrafo(Grafo *g);
+Grafo* criarGrafoMA(int n);
+void destruirGrafoMA(Grafo *g);
 
-void inserirAresta(Grafo *g, int u, int v);
-void inserirArestaPeso(Grafo *g, int u, int v, int peso);
+void inserirArestaMA(Grafo *g, int u, int v);
+void inserirArestaPesoMA(Grafo *g, int u, int v, int peso);
 
-void removerAresta(Grafo *g, int u, int v);
+void removerArestaMA(Grafo *g, int u, int v);
 
-int possuiAresta(Grafo *g, int u, int v);
+int possuiArestaMA(Grafo *g, int u, int v);
 
-void imprimirArestas(Grafo *g);
+void buscaProfundidadeMA(Grafo *g, int *pai, int p, int v);
+int* encontraCaminhosMA(Grafo *g, int s);
 
-void buscaProfundidade(Grafo *g, int *pai, int p, int v);
-int* encontraCaminhos(Grafo *g, int s);
+BUSCA buscaLarguraMA(Grafo *g, int s);
 
-int* buscaLargura(Grafo *g, int s);
+BUSCA dijkstraMA(Grafo* g, int s);
 
-int* dijkstra(Grafo* g, int s);
-int* geradoraMinima(Grafo* g, int s);
-
-#include "matriz_adj.c"
+BUSCA geradoraMinimaMA(Grafo* g, int s);
 
 #endif
