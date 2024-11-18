@@ -4,10 +4,22 @@
 #include "grafos/matriz_adj.h"
 #include "auxiliares/auxiliares.h"
 
-int main() {
+int main(int argc, char* argv[]) {
     int opcao, numVertices, origem, destino, peso, inicio;
     P_GRAFO grafo;
     Grafo *g;
+
+    //Se houver argumentos verifica se é um caso de teste
+    if(argc > 1){
+        if(strcmp(argv[1], "teste_matriz") == 0){
+            //teste 1
+            return 0;
+        }
+        if(strcmp(argv[1], "teste_lista") == 0){
+            //teste 2
+            return 0;
+        }
+    }
 
     menuTipoGrafo();
     scanf("%d", &opcao);
