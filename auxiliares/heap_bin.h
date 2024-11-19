@@ -2,14 +2,14 @@
 #define HEAP_BIN_H
 
 typedef struct {
-	int prioridade;
-	int vertice;
+    int prioridade;
+    int vertice;
 } Item;
 
 typedef struct {
-	Item *v;
-	int *indice;
-	int n, tamanho;
+    Item *v;
+    int *indice;
+    int n, tamanho;
 } FP;
 
 FP* criarFprio(int n);

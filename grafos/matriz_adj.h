@@ -4,8 +4,8 @@
 #include "../auxiliares/auxiliares.h"
 
 typedef struct Grafo {
-	int **adj;
-	int n;
+    int **adj;
+    int n;
 } Grafo;
 
 Grafo* criarGrafoMA(int n);
