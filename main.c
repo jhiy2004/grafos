@@ -14,10 +14,96 @@ int main(int argc, char* argv[]) {
     if(argc > 1){
         if(strcmp(argv[1], "teste_matriz") == 0){
             //teste 1
+            g = criarGrafoMA(5);
+            inserirArestaMA(g, 0, 1);
+            inserirArestaMA(g, 1, 2);
+            inserirArestaMA(g, 2, 3);
+            inserirArestaMA(g, 3, 4);
+            inserirArestaMA(g, 4, 0);
+
+            printf("\nGrafo com matriz de adjacência e 5 vértices\n");
+            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Busca em largura a partir do vértice 0:\n\n");
+            BUSCA resultado = buscaLarguraMA(g, 0);
+            exibirResultadoBusca(resultado, 5);
+            printf("\nPressione Enter para continuar...");
+            getchar();
+            system("clear");
+
+            printf("\nGrafo com matriz de adjacência e 5 vértices\n");
+            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Busca em profundidade a partir do vértice 0:\n\n");
+            resultado = buscaProfundidadeMA(g, 0);
+            exibirResultadoBusca(resultado, 5);
+            printf("\nPressione Enter para continuar...");
+            getchar();
+            system("clear");
+
+            printf("\nGrafo com matriz de adjacência e 5 vértices\n");
+            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Árvore geradora mínima a partir do vértice 0:\n\n");
+            resultado = geradoraMinimaMA(g, 0);
+            exibirResultadoBusca(resultado, 5);
+            printf("\nPressione Enter para continuar...");
+            getchar();
+            system("clear");
+
+            printf("\nGrafo com matriz de adjacência e 5 vértices\n");
+            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Dijkstra a partir do vértice 0:\n\n");
+            resultado = dijkstraMA(g, 0);
+            exibirResultadoBusca(resultado, 5);
+            printf("\nPressione Enter para continuar...");
+            getchar();
+            system("clear");
+
             return 0;
         }
         if(strcmp(argv[1], "teste_lista") == 0){
             //teste 2
+            grafo = criarGrafoLA(5);
+            inserirArestaLA(grafo, 0, 1, 1);
+            inserirArestaLA(grafo, 1, 2, 1);
+            inserirArestaLA(grafo, 2, 3, 1);
+            inserirArestaLA(grafo, 3, 4, 1);
+            inserirArestaLA(grafo, 4, 0, 1);
+
+            printf("\nGrafo com lista de adjacência e 5 vértices\n");
+            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Busca em largura a partir do vértice 2:\n\n");
+            BUSCA resultado = buscaEmLarguraLA(grafo, 2);
+            exibirResultadoBusca(resultado, 5);
+            printf("\nPressione Enter para continuar...");
+            getchar();
+            system("clear");
+
+            printf("\nGrafo com lista de adjacência e 5 vértices\n");
+            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Busca em profundidade a partir do vértice 2:\n\n");
+            resultado = buscaEmProfundidadeLA(grafo, 2);
+            exibirResultadoBusca(resultado, 5);
+            printf("\nPressione Enter para continuar...");
+            getchar();
+            system("clear");
+
+            printf("\nGrafo com lista de adjacência e 5 vértices\n");
+            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Árvore geradora mínima a partir do vértice 2:\n\n");
+            resultado = arvoreGeradoraMinimaPrimLA(grafo, 2);
+            exibirResultadoBusca(resultado, 5);
+            printf("\nPressione Enter para continuar...");
+            getchar();
+            system("clear");
+
+            printf("\nGrafo com lista de adjacência e 5 vértices\n");
+            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Dijkstra a partir do vértice 2:\n\n");
+            resultado = dijkstraLA(grafo, 2);
+            exibirResultadoBusca(resultado, 5);
+            printf("\nPressione Enter para continuar...");
+            getchar();
+            system("clear");
+
             return 0;
         }
     }
