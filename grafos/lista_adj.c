@@ -1,3 +1,9 @@
+/*
+ * lista_adj.c
+ * Implementação das funções para manipulação de grafos utilizando listas de adjacência.
+ * Contém a criação, liberação, inserção, remoção de arestas e algoritmos de busca e caminhos mínimos.
+ */
+
 #include <stdlib.h>
 #include <limits.h>
 #include "lista_adj.h"
@@ -5,31 +11,32 @@
 #include "../auxiliares/pilha.h"
 #include "../auxiliares/heap_bin.h"
 
-// Criação do grafo
+// Criação de um grafo com listas de adjacência.
 P_GRAFO criarGrafoLA(int num){
     int i;
     P_GRAFO g = (P_GRAFO) malloc(sizeof(GRAFO));
     g->num = num;
     g->adjacencia = (P_NO*) malloc(num * sizeof(P_NO));
     
-    for(i=0; i < num; i++){
+    // Inicializa todas as listas de adjacência como vazias (NULL).
+    for(i = 0; i < num; i++){
         g->adjacencia[i] = NULL;
     }
 
     return g;
 }
 
-// Liberação do grafo
+// Libera a memória de um grafo e suas listas.
 void liberarGrafoLA(P_GRAFO g){
     int i;
-    for(i=0; i < g->num; i++){
+    for(i = 0; i < g->num; i++){
         liberarListaLA(g->adjacencia[i]);
     }
     free(g->adjacencia);
     free(g);
 }
 
-// Liberar as listas do grafo
+// Libera a memória de uma lista de adjacência recursivamente.
 void liberarListaLA(P_NO lista){
     while(lista != NULL){
         liberarListaLA(lista->prox);
@@ -37,12 +44,13 @@ void liberarListaLA(P_NO lista){
     }
 }
 
-// Adicionar aresta ao grafo
+// Insere uma aresta bidirecional no grafo.
 void inserirArestaLA(P_GRAFO g, int u, int v, int peso){
     g->adjacencia[v] = inserirNaListaLA(g->adjacencia[v], u, peso);
     g->adjacencia[u] = inserirNaListaLA(g->adjacencia[u], v, peso);
 }
 
+// Insere um nó em uma lista de adjacência.
 P_NO inserirNaListaLA(P_NO lista, int v, int peso){
     P_NO novo = (P_NO) malloc(sizeof(NO));
     novo->v = v;
@@ -51,27 +59,28 @@ P_NO inserirNaListaLA(P_NO lista, int v, int peso){
     return novo;
 }
 
-// Remover aresta do grafo
+// Remove uma aresta bidirecional do grafo.
 void removerArestaLA(P_GRAFO g, int u, int v){
     g->adjacencia[u] = removerDaListaLA(g->adjacencia[u], v);
     g->adjacencia[v] = removerDaListaLA(g->adjacencia[v], u);
 }
 
+// Remove um nó de uma lista de adjacência.
 P_NO removerDaListaLA(P_NO lista, int v){
     P_NO proximo;
     if(lista == NULL){
         return NULL;
-    }else if(lista->v == v){
+    } else if(lista->v == v){
         proximo = lista->prox;
         free(lista);
         return proximo;
-    }else{
+    } else {
         lista->prox = removerDaListaLA(lista->prox, v);
         return lista;
     }
 }
 
-// Implementação da Busca em Profundidade
+// Busca em profundidade utilizando pilha para explorar os vértices.
 BUSCA buscaEmProfundidadeLA(P_GRAFO g, int s){
     int v;
     P_NO t;
@@ -82,16 +91,19 @@ BUSCA buscaEmProfundidadeLA(P_GRAFO g, int s){
 
     P_PILHA p = criarPilha();
 
-    for(v=0; v < g->num; v++){
+    // Inicializa os vetores de resultado e o estado dos vértices.
+    for(v = 0; v < g->num; v++){
         resultado.pai[v] = -1;
         resultado.custo[v] = 0;
         visitado[v] = 0;
     }
 
+    // Processa o vértice inicial.
     empilhar(p, s);
     resultado.pai[s] = s;
     resultado.custo[s] = 0;
 
+    // Exploração da pilha.
     while(!pilhaVazia(p)){
         v = desempilar(p);
         visitado[v] = 1;
@@ -105,13 +117,14 @@ BUSCA buscaEmProfundidadeLA(P_GRAFO g, int s){
         }
     }
 
+    // Libera estruturas auxiliares.
     destroiPilha(p);
     free(visitado);
 
     return resultado;
 }
 
-// Implementação da Busca em Largura
+// Busca em largura utilizando fila para explorar os vértices.
 BUSCA buscaEmLarguraLA(P_GRAFO g, int s){
     int v;
     P_NO t;
@@ -122,17 +135,20 @@ BUSCA buscaEmLarguraLA(P_GRAFO g, int s){
 
     P_FILA f = criarFila();
 
-    for(v=0; v < g->num; v++){
+    // Inicializa os vetores de resultado e o estado dos vértices.
+    for(v = 0; v < g->num; v++){
         resultado.pai[v] = -1;
         resultado.custo[v] = 0;
         visitado[v] = 0;
     }
 
+    // Processa o vértice inicial.
     enfileira(f, s);
     resultado.pai[s] = s;
     resultado.custo[s] = 0;
     visitado[s] = 1;
 
+    // Exploração da fila.
     while(!filaVazia(f)){
         v = desenfileira(f);
         
@@ -146,6 +162,7 @@ BUSCA buscaEmLarguraLA(P_GRAFO g, int s){
         }
     }
 
+    // Libera estruturas auxiliares.
     destroiFila(f);
     free(visitado);
 
