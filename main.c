@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
             inserirArestaMA(g, 4, 0);
 
             printf("\nGrafo com matriz de adjacência e 5 vértices\n");
-            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Arestas do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
             printf("Busca em largura a partir do vértice 0:\n\n");
             BUSCA resultado = buscaLarguraMA(g, 0);
             exibirResultadoBusca(resultado, 5);
@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
             system("clear");
 
             printf("\nGrafo com matriz de adjacência e 5 vértices\n");
-            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Arestas do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
             printf("Busca em profundidade a partir do vértice 0:\n\n");
             resultado = buscaProfundidadeMA(g, 0);
             exibirResultadoBusca(resultado, 5);
@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
             system("clear");
 
             printf("\nGrafo com matriz de adjacência e 5 vértices\n");
-            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Arestas do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
             printf("Árvore geradora mínima a partir do vértice 0:\n\n");
             resultado = geradoraMinimaMA(g, 0);
             exibirResultadoBusca(resultado, 5);
@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
             system("clear");
 
             printf("\nGrafo com matriz de adjacência e 5 vértices\n");
-            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Arestas do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
             printf("Dijkstra a partir do vértice 0:\n\n");
             resultado = dijkstraMA(g, 0);
             exibirResultadoBusca(resultado, 5);
@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
             inserirArestaLA(grafo, 4, 0, 1);
 
             printf("\nGrafo com lista de adjacência e 5 vértices\n");
-            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Arestas do grafo (todas com peso 1) : 0-1; 1-2; 2-3; 3-4; 4-0\n");
             printf("Busca em largura a partir do vértice 2:\n\n");
             BUSCA resultado = buscaEmLarguraLA(grafo, 2);
             exibirResultadoBusca(resultado, 5);
@@ -78,7 +78,7 @@ int main(int argc, char* argv[]) {
             system("clear");
 
             printf("\nGrafo com lista de adjacência e 5 vértices\n");
-            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Arestas do grafo (todas com peso 1) : 0-1; 1-2; 2-3; 3-4; 4-0\n");
             printf("Busca em profundidade a partir do vértice 2:\n\n");
             resultado = buscaEmProfundidadeLA(grafo, 2);
             exibirResultadoBusca(resultado, 5);
@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
             system("clear");
 
             printf("\nGrafo com lista de adjacência e 5 vértices\n");
-            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Arestas do grafo (todas com peso 1) : 0-1; 1-2; 2-3; 3-4; 4-0\n");
             printf("Árvore geradora mínima a partir do vértice 2:\n\n");
             resultado = arvoreGeradoraMinimaPrimLA(grafo, 2);
             exibirResultadoBusca(resultado, 5);
@@ -96,7 +96,7 @@ int main(int argc, char* argv[]) {
             system("clear");
 
             printf("\nGrafo com lista de adjacência e 5 vértices\n");
-            printf("Vértices do grafo: 0-1; 1-2; 2-3; 3-4; 4-0\n");
+            printf("Arestas do grafo (todas com peso 1) : 0-1; 1-2; 2-3; 3-4; 4-0\n");
             printf("Dijkstra a partir do vértice 2:\n\n");
             resultado = dijkstraLA(grafo, 2);
             exibirResultadoBusca(resultado, 5);
