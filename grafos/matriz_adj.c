@@ -9,6 +9,7 @@
 Grafo* criarGrafoMA(int n) {
     int i, j;
     Grafo* g = malloc(sizeof(Grafo));
+
     g->n = n;
     g->adj = malloc(n * sizeof(int*));
     for(i = 0; i < n; i++)
@@ -27,9 +28,11 @@ void destruirGrafoMA(Grafo* g) {
     int i;
     for(i = 0; i < g->n; i++)
         free(g->adj[i]);
+
     free(g->adj);
     free(g);
 }
+
 
 // Insere uma aresta não direcionada entre os vértices u e v.
 void inserirArestaMA(Grafo* g, int u, int v) {
@@ -39,15 +42,18 @@ void inserirArestaMA(Grafo* g, int u, int v) {
 
 // Insere uma aresta com peso entre os vértices u e v.
 void inserirArestaPesoMA(Grafo* g, int u, int v, int peso) {
+
     g->adj[u][v] = peso;
     g->adj[v][u] = peso;
 }
+
 
 // Remove a aresta entre os vértices u e v.
 void removerArestaMA(Grafo* g, int u, int v) {
     g->adj[u][v] = 0;
     g->adj[v][u] = 0;
 }
+
 
 // Verifica se existe uma aresta entre u e v.
 int possuiArestaMA(Grafo* g, int u, int v) {
@@ -80,6 +86,7 @@ BUSCA buscaProfundidadeMA(Grafo *g, int s) {
     while(!pilhaVazia(p)) {
         v = desempilar(p);
         visitado[v] = 1;
+
         for(int i = 0; i < g->n; i++) {
             if(g->adj[v][i] && !visitado[i]) {
                 resultado.pai[i] = v;
@@ -175,40 +182,40 @@ BUSCA dijkstraMA(Grafo* g, int s) {
 
 
 BUSCA geradoraMinimaMA(Grafo* g, int s) {
-	int v;
+    int v;
     BUSCA resultado;
     resultado.pai = (int*) malloc(g->n * sizeof(int));
     resultado.custo = (int*) malloc(g->n * sizeof(int));
-	int *visitado = (int*)malloc(g->n * sizeof(int));
-	
-	FP* h = criarFprio(g->n);
-	for (v = 0; v < g->n; v++) {
-		resultado.pai[v] = -1;
+    int *visitado = (int*)malloc(g->n * sizeof(int));
+    
+    FP* h = criarFprio(g->n);
+    for (v = 0; v < g->n; v++) {
+        resultado.pai[v] = -1;
         resultado.custo[v] = INT_MAX;
-		insereFP(h, v, INT_MAX);
-		visitado[v] = 0;
-	}
-	resultado.pai[s] = s;
+        insereFP(h, v, INT_MAX);
+        visitado[v] = 0;
+    }
+    resultado.pai[s] = s;
     resultado.custo[s] = 0;
-	diminuiprioridade(h, s, 0);
-	visitado[0] = 1;
+    diminuiprioridade(h, s, 0);
+    visitado[0] = 1;
 
-	while (!vaziaFP(h)) {
-		v = extraiMinimoFP(h);
+    while (!vaziaFP(h)) {
+        v = extraiMinimoFP(h);
 
-		visitado[v] = 1;
+        visitado[v] = 1;
 
-		if (prioridadeFP(h, v) != INT_MAX)
-			for (int i = 0; i < g->n; i++){
-				if (g->adj[v][i] != 0 && !visitado[i]){
-					if (g->adj[v][i] < prioridadeFP(h, i)) {
-						diminuiprioridade(h, i, g->adj[v][i]);
-						resultado.pai[i] = v;
+        if (prioridadeFP(h, v) != INT_MAX)
+            for (int i = 0; i < g->n; i++){
+                if (g->adj[v][i] != 0 && !visitado[i]){
+                    if (g->adj[v][i] < prioridadeFP(h, i)) {
+                        diminuiprioridade(h, i, g->adj[v][i]);
+                        resultado.pai[i] = v;
                         resultado.custo[i] = g->adj[v][i];
-					}
-				}
-			}
-	}
-	return resultado;
+                    }
+                }
+            }
+    }
+    return resultado;
 }
 
