@@ -34,7 +34,13 @@ Representação em árvore dos vértices do heap mínimo:
 3
 
 Para compilar o programa basta executar:
+make
+
+Para compilar e executar o programa basta executar:
 make run
+
+Para remover os arquivos gerados pela compilação basta executar:
+make clean
 
 Para rodar o programa com menu para interagir, basta executar:
 ./grafo
