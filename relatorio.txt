@@ -1,0 +1,45 @@
+Dentro da pasta raiz do projeto existe um arquivo chamado "grafo.png", que é uma representação
+gráfica do grafo utilizado nos scripts de teste.
+
+Dentro da pasta auxiliares estão os arquivos referentes às estruturas de dados utilizadas para
+desenvolver as funções de percorrer o gráfico, foram usadas fila, pilha e heap mínimo.
+
+Dentro da pasta grafos estão os arquivos para cada tipo de implementação de grafo, matriz
+de adjacência e lista de adjacência.
+
+Na implementação do heap mínimo, quando um elemento tem sua prioridade reduzida para um valor já existente
+no heap mínimo, o elemento que foi reduzido irá assumir o lugar do mais antigo.Exemplo:
+
+(vertice, prioridade)
+
+Antes de reduzir a prioridade do vertice 2 para 2:
+[(0, 2), (1, 4), (2, 5), (3, 7)]
+
+Representação em árvore dos vértices do heap mínimo:
+    0
+   / \
+  1   2
+ /
+3
+
+Depois de reduzir a prioridade do vertice 2 para 2:
+[(2, 2), (1, 4), (0, 2), (3, 7)]
+
+Representação em árvore dos vértices do heap mínimo:
+    2
+   / \
+  1   0
+ /
+3
+
+Para compilar o programa basta executar:
+make run
+
+Para rodar o programa com menu para interagir, basta executar:
+./grafo
+
+Para rodar o script de teste para matriz de adjacência, basta executar:
+./grafo teste_matriz
+
+Para rodar o script de teste para lista de adjacência, basta executar:
+./grafo teste_lista
