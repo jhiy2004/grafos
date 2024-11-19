@@ -197,12 +197,12 @@ int main(int argc, char* argv[]) {
             g = criarGrafoMA(numVertices);
 
             // Adicionar arestas
-            printf("Adicione as arestas no formato: origem destino (digite -1 para encerrar):\n");
+            printf("Adicione as arestas no formato: origem destino peso (digite -1 para encerrar):\n");
             while (1) {
                 scanf("%d", &origem);
                 if (origem == -1) break;
-                scanf("%d", &destino);
-                inserirArestaMA(g, origem, destino);
+                scanf("%d %d", &destino, &peso);
+                inserirArestaPesoMA(g, origem, destino, peso);
             }
 
             // Menu de operações
